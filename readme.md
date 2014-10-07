@@ -1,25 +1,41 @@
-## Laravel PHP Framework
+OnLibrary Book Manager
+======================
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+This application will allow a person to keep a directory of books. This will allow them to check to make sure they
+don't already have a book that they are thinking about purchasing.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+Completed features
+------------------
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+None. It is currently a base Laravel install.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Features in development
+-----------------------
 
-## Official Documentation
+ *  **Multiple users**  return
+    A single instance of the application will be able to store data for multiple users. The first version will utilize
+    a simple registration and login mechanism. Users will currently only be able to view/modify their own library.
+ *  **Adding books to the directory**  return
+    This will allow the user to enter an ISBN, which will hit a Google API and auto-populate the remaining fields. The
+    user may also manually enter all the data.
+ *  **Searching the directory**  return
+    The user can search by any of the fields used to enter data.
+ *  **Saving searches**  return
+    The user can save search criteria to more easily run searches later.
+ *  **Viewing previous searches**  return
+    The dashboard will contain a section listing recent searches. The user will be able to click on a recent search
+    and re-run that search.
+ *  **Viewing popular searches**  return
+    The dashboard will contain a section listing popular searches. The user will be able to click on a popular search
+    and re-run that search.
+ *  **Managing the directory**  return
+    The user will be able to go in and modify/delete books which have been entered.
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+Long-term goals
+---------------
 
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+ *  Support multiple types of media, not just books, eventually storing anything from music, movies, to video games.
+ *  Share your library with other users. This would allow other users to view what you have and comment on your
+    collection or make recommendations.
+ *  Rate and review items stored in your library. These would be public to anyone searching for that item.
+ *  Have the site make recommendations for you based on various factors (genre, author, publisher, etc.).
