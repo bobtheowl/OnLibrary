@@ -121,7 +121,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
+        // Begin OnLibrary service providers
+        'OnLibrary\Database\Eloquent\RepositoryServiceProvider'
 	),
 
 	/*
