@@ -122,7 +122,8 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         // Begin OnLibrary service providers
-        'OnLibrary\Database\Eloquent\RepositoryServiceProvider'
+        'OnLibrary\Database\Eloquent\RepositoryServiceProvider',
+        'OnLibrary\User\Laravel\UserServiceProvider'
 	),
 
 	/*
