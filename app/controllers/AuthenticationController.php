@@ -2,79 +2,53 @@
 
 class AuthenticationController extends \BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }//end index()
+    /** Message displayed if authentication failed */
+    const BAD_AUTH_ERROR = 'The username or password entered is invalid.';
+
+    /** Message displayed if the required input wasn't sent */
+    const BAD_INPUT_ERROR = 'You must input a username and password.';
 
     /**
-     * Show the form for creating a new resource.
+     * Attempts to authenticate the user.
      *
-     * @return Response
+     * @retval Redirect
      */
-    public function create()
+    public function authenticate()
     {
-        //
-    }//end create()
+        $username = Input::get('username');
+        $password = Input::get('password');
+        $remember = Input::get('remember');
+
+        if (empty($username) || empty($password)) {
+            Session::flash('authError', self::BAD_INPUT_ERROR);
+            return Redirect::to('login');
+        }//end if
+
+        $success = (!empty($remember))
+            ? Auth::attempt(['username' => $username, 'password' => $password], true)
+            : Auth::attempt(['username' => $username, 'password' => $password]);
+
+        if ($success === false) {
+            Session::flash('authError', self::BAD_AUTH_ERROR);
+            return Redirect::to('login');
+        }//end if
+
+        return Redirect::intended('/');
+    }//end authenticate()
 
     /**
-     * Store a newly created resource in storage.
+     * Logs the user out and destroys their session.
      *
-     * @return Response
+     * @retval Redirect
      */
-    public function store()
+    public function logout()
     {
-        //
-    }//end store()
+        Auth::logout();
+        Session::flush();
+        Session::regenerate();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }//end show()
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }//end edit()
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }//end update()
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }//end destroy()
+        return Redirect::to('login');
+    }//end logout()
 }//end class AuthenticationController
 
 //end file AuthenticationController.php
