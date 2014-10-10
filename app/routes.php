@@ -23,6 +23,9 @@ Route::filter('requireAuth', function () {
 Route::get('login', function () {
     return View::make('login');
 });//end login GET route
+Route::get('register', function () {
+    return View::make('register');
+});//end register GET route
 Route::post('login', ['uses' => 'AuthenticationController@authenticate']);
 
 // Routes which require authentication to access
