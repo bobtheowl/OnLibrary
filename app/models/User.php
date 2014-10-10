@@ -24,6 +24,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     protected $hidden = array('password', 'remember_token');
     
     /**
+     * Sets up the validation and logging.
+     *
+     * @retval null
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(App::make('OnLibrary/Validator/Laravel/AuthorObserver'));
+    }//end boot()
+    
+    /**
      * Set up the one-to-many relationship with the book_user table.
      */
     public function book_users()
