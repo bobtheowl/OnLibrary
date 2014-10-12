@@ -1,7 +1,8 @@
 <?php
 namespace OnLibrary\Validator\Laravel;
 
-use OnLibrary\Exception\FatalAjaxError;
+use OnLibrary\Exception\FatalAjaxException;
+use OnLibrary\Database\PostSqlMapper;
 
 class UserObserver
 {
@@ -18,7 +19,7 @@ class UserObserver
      * Validates user input before it is added to the database.
      *
      * @param User $user Instance of model with data to be added
-     * @throws OnLibrary::Exception::FatalAjaxError Input failed validation
+     * @throws OnLibrary::Exception::FatalAjaxException Input failed validation
      */
     public function creating($user)
     {
@@ -28,7 +29,11 @@ class UserObserver
             ->usingRule('insert')
             ->isValid();
         if ($success === false) {
-            throw new FatalAjaxError(json_encode($this->validator->getErrors()));
+            throw new FatalAjaxException(
+                json_encode(
+                    PostSqlMapper::sqlToPost('users', $this->validator->getErrors())
+                )
+            );
         }//end if
     }//end creating
 
@@ -36,7 +41,7 @@ class UserObserver
      * Validates user input before it is added to the database.
      *
      * @param User $user Instance of model with data to be updated
-     * @throws OnLibrary::Exception::FatalAjaxError Input failed validation
+     * @throws OnLibrary::Exception::FatalAjaxException Input failed validation
      */
     public function updating($user)
     {
@@ -46,7 +51,11 @@ class UserObserver
             ->usingRule('update', ['id' => $input['id']])
             ->isValid();
         if ($success === false) {
-            throw new FatalAjaxError(json_encode($this->validator->getErrors()));
+            throw new FatalAjaxException(
+                json_encode(
+                    PostSqlMapper::sqlToPost('users', $this->validator->getErrors())
+                )
+            );
         }//end if
     }//end updating
 }//end class UserObserver

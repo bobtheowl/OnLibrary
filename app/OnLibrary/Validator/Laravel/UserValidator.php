@@ -28,7 +28,7 @@ class UserValidator extends BaseLaravelValidator implements ValidatorInterface
      *
      * @param string $rule Rule to use to validate input
      * @param array $params Optional array of parameters to use with the rules
-     * @retval null
+     * @retval OnLibrary::Validator::Laravel::UserValidator
      */
     public function usingRule($rule, array $params = [])
     {
@@ -43,6 +43,8 @@ class UserValidator extends BaseLaravelValidator implements ValidatorInterface
         } else {
             $this->currentRules['username'] .= '|' . $this->generateUniqueRule('users', 'username');
         }//end else
+ 
+        return $this;
     }//end usingRule()
 }//end class UserValidator
 

@@ -27,6 +27,7 @@ Route::get('register', function () {
     return View::make('register');
 });//end register GET route
 Route::post('login', ['uses' => 'AuthenticationController@authenticate']);
+Route::resource('user', 'UserResource');
 
 // Routes which require authentication to access
 Route::group(['before' => 'requireAuth'], function () {
@@ -35,7 +36,6 @@ Route::group(['before' => 'requireAuth'], function () {
     Route::resource('book', 'BookResource');
     Route::resource('publisher', 'PublisherResource');
     Route::resource('series', 'SeriesResource');
-    Route::resource('user', 'UserResource');
 
     // Routes
     Route::get('logout', ['uses' => 'AuthenticationController@logout']);

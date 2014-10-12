@@ -24,6 +24,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     protected $hidden = array('password', 'remember_token');
     
     /**
+     * The attributes which are not mass-assignable.
+     *
+     * @var array
+     */
+    protected $guarded = array('id', 'created_at', 'updated_at');
+    
+    /**
      * Sets up the validation and logging.
      *
      * @retval null
@@ -31,7 +38,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     protected static function boot()
     {
         parent::boot();
-        self::observe(App::make('OnLibrary/Validator/Laravel/UserObserver'));
+        self::observe(App::make('OnLibrary\Validator\Laravel\UserObserver'));
     }//end boot()
     
     /**

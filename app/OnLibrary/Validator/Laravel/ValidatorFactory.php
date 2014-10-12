@@ -2,9 +2,11 @@
 namespace OnLibrary\Validator\Laravel;
 
 use OnLibrary\Exception\InternalException;
+use \App;
 
 class ValidatorFactory
 {
+    /** Error message displayed when an invalid validator type is requested */
     const INVALID_TYPE_ERROR = 'Requested an invalid validator type.';
 
     /** Array of valid validator types */

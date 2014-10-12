@@ -2,6 +2,7 @@
 namespace OnLibrary\Validator\Laravel;
 
 use OnLibrary\Validator\ValidatorInterface;
+use \Validator;
 
 abstract class BaseLaravelValidator implements ValidatorInterface
 {
@@ -30,11 +31,12 @@ abstract class BaseLaravelValidator implements ValidatorInterface
      * Sets input to be checked using the validator.
      *
      * @param array $input Array of input to be checked
-     * @retval null
+     * @retval OnLibrary::Validator::Laravel::BaseLaravelValidator
      */
     public function usingInput(array $input)
     {
         $this->input = $input;
+        return $this;
     }//end usingInput()
 
     /**
@@ -59,7 +61,7 @@ abstract class BaseLaravelValidator implements ValidatorInterface
      */
     public function getErrors()
     {
-        return $this->validator->messages()->all();
+        return $this->validator->messages()->toArray();
     }//end getErrors()
 
     /**

@@ -2,7 +2,7 @@
 use OnLibrary\Database\UserRepository as Repository;
 use OnLibrary\Database\PostSqlMapper;
 use OnLibrary\Exception\InternalException;
-use OnLibrary\Exception\FatalAjaxError;
+use OnLibrary\Exception\FatalAjaxException;
 
 class UserResource extends \BaseController
 {
@@ -48,14 +48,16 @@ class UserResource extends \BaseController
     public function store()
     {
         try {
-            $input = PostSqlMapper::generateSqlArray('users', Input::all());
+            $input = PostSqlMapper::postToSql('users', Input::all());
             $this->repo->insert($input);
-        } catch (FatalAjaxError $e) {
+        } catch (FatalAjaxException $e) {
             return Response::make($e->getMessage(), 400);
-        } catch (InternalError $e) {
-            return Response::make(self::GENERIC_ERROR, 400);
+        } catch (InternalException $e) {
+            return Response::make($e->getMessage(), 400);
+            //return Response::make(self::GENERIC_ERROR, 400);
         } catch (Exception $e) {
-            return Response::make(self::GENERIC_ERROR, 500);
+            return Response::make($e, 500);
+            //return Response::make(self::GENERIC_ERROR, 500);
         }//end try/catches
     }//end store()
 
@@ -69,9 +71,9 @@ class UserResource extends \BaseController
     {
         try {
             return $this->repo->select($id);
-        } catch (FatalAjaxError $e) {
+        } catch (FatalAjaxException $e) {
             return Response::make($e->getMessage(), 400);
-        } catch (InternalError $e) {
+        } catch (InternalException $e) {
             return Response::make(self::GENERIC_ERROR, 400);
         } catch (Exception $e) {
             return Response::make(self::GENERIC_ERROR, 500);

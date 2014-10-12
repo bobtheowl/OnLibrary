@@ -3,7 +3,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <form role="form" action="{{-- REGISTER HREF HERE --}}" method="POST">
+      <form role="form">
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -66,7 +66,7 @@
             <a href="{{ URL::to('login') }}" class="btn btn-default pull-left">
               <i class="fa fa-reply"></i> Return to Sign In
             </a>
-            <button type="submit" class="btn btn-primary pull-right">
+            <button type="button" class="btn btn-primary pull-right" id="register-submit">
               <i class="fa fa-pencil-square-o"></i> Create Account
             </button>
           </div>{{-- /.panel-footer.clearfix --}}
@@ -74,4 +74,12 @@
       </form>
     </div>{{-- /.col-md-6.col-md-offset-3 --}}
   </div>{{-- /.row --}}
+@stop
+
+@section('js-include')
+  <script src="{{ URL::asset('js/register.js') }}"></script>
+@stop
+
+@section('onload')
+    register.init();
 @stop

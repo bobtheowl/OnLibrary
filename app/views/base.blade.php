@@ -30,10 +30,16 @@
   <script src="{{ URL::asset('js/plugins/jquery/jquery-2.1.1.min.js') }}"></script>
   {{-- Bootstrap --}}
   <script src="{{ URL::asset('js/bootstrap/bootstrap.min.js') }}"></script>
+  {{-- OnLibrary --}}
+  <script src="{{ URL::asset('js/onlibrary.js') }}"></script>
   {{-- Other included third-party JavaScript --}}
   @yield('js-include', '')
   
   <script type="text/javascript">
+      var siteUrl = '{{ URL::to('') }}';
+      if (siteUrl.substr(-1) !== '/') {
+          siteUrl += '/';
+      }//end if
       $(document).on('ready', function () {
           @yield('onload', '')
       });
