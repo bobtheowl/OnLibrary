@@ -1,7 +1,25 @@
 <?php
+use OnLibrary\Database\UserRepository as Repository;
+use OnLibrary\Database\PostSqlMapper;
+use OnLibrary\Exception\InternalException;
+use OnLibrary\Exception\FatalAjaxError;
 
 class UserResource extends \BaseController
 {
+    /** Generic error to display */
+    const GENERIC_ERROR = 'An unknown error occurred.';
+
+    /** Database repository */
+    private $repo;
+
+    /**
+     * Store an instance of the repository
+     */
+    public function __construct(Repository $repo)
+    {
+        $this->repo = $repo;
+    }//end __construct()
+
     /**
      * Display a listing of the resource.
      *
@@ -9,7 +27,7 @@ class UserResource extends \BaseController
      */
     public function index()
     {
-        //
+        return $this->repo->all();
     }//end index()
 
     /**
@@ -29,7 +47,16 @@ class UserResource extends \BaseController
      */
     public function store()
     {
-        //
+        try {
+            $input = PostSqlMapper::generateSqlArray('users', Input::all());
+            $this->repo->insert($input);
+        } catch (FatalAjaxError $e) {
+            return Response::make($e->getMessage(), 400);
+        } catch (InternalError $e) {
+            return Response::make(self::GENERIC_ERROR, 400);
+        } catch (Exception $e) {
+            return Response::make(self::GENERIC_ERROR, 500);
+        }//end try/catches
     }//end store()
 
     /**
@@ -40,7 +67,15 @@ class UserResource extends \BaseController
      */
     public function show($id)
     {
-        //
+        try {
+            return $this->repo->select($id);
+        } catch (FatalAjaxError $e) {
+            return Response::make($e->getMessage(), 400);
+        } catch (InternalError $e) {
+            return Response::make(self::GENERIC_ERROR, 400);
+        } catch (Exception $e) {
+            return Response::make(self::GENERIC_ERROR, 500);
+        }//end try/catches
     }//end show()
 
     /**

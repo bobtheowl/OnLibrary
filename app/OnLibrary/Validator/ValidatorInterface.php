@@ -26,6 +26,13 @@ interface ValidatorInterface
      * @retval boolean True if input is valid, false otherwise
      */
     public function isValid();
+    
+    /**
+     * Returns an array of validation errors.
+     *
+     * @retval array Validation errors
+     */
+    public function getErrors();
 }//end interface ValidatorInterface
 
 //end file ValidatorInterface.php

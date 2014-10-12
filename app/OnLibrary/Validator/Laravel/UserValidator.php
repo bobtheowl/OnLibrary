@@ -2,30 +2,26 @@
 namespace OnLibrary\Validator\Laravel;
 
 use OnLibrary\Validator\ValidatorInterface;
+use OnLibrary\Exception\InternalException;
 
 class UserValidator extends BaseLaravelValidator implements ValidatorInterface
 {
-    /** Validation rules */
+    /** Available validation rules */
     private static $rules = [
         'insert' => [
-        
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'username' => 'required|min:5|alpha_dash',
+            'email_address' => 'required|email',
+            'password' => 'required'
         ],
-        
         'update' => [
-        
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'username' => 'required|min:5|alpha_dash',
+            'email' => 'required|email'
         ]
     ];
-
-    /**
-     * Sets input to be checked using the validator.
-     *
-     * @param array $input Array of input to be checked
-     * @retval null
-     */
-    public function usingInput(array $input)
-    {
-        //
-    }//end usingInput()
 
     /**
      * Sets rule to be used to validate input.
@@ -36,7 +32,17 @@ class UserValidator extends BaseLaravelValidator implements ValidatorInterface
      */
     public function usingRule($rule, array $params = [])
     {
-        //
+        if (array_key_exists($rule, self::$rules) === false) {
+            throw new InternalException(self::INVALID_RULE_ERROR);
+        }//end if
+
+        $this->currentRules = self::$rules[$rule];
+
+        if (array_key_exists('id', $params)) {
+            $this->currentRules['username'] .= '|' . $this->generateUniqueRule('users', 'username', $params['id']);
+        } else {
+            $this->currentRules['username'] .= '|' . $this->generateUniqueRule('users', 'username');
+        }//end else
     }//end usingRule()
 }//end class UserValidator
 

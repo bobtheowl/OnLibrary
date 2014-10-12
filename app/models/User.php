@@ -31,7 +31,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     protected static function boot()
     {
         parent::boot();
-        self::observe(App::make('OnLibrary/Validator/Laravel/AuthorObserver'));
+        self::observe(App::make('OnLibrary/Validator/Laravel/UserObserver'));
     }//end boot()
     
     /**
