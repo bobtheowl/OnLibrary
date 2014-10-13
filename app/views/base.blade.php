@@ -30,6 +30,7 @@
   <script src="{{ URL::asset('js/plugins/jquery/jquery-2.1.1.min.js') }}"></script>
   {{-- Bootstrap --}}
   <script src="{{ URL::asset('js/bootstrap/bootstrap.min.js') }}"></script>
+  <script src="{{ URL::asset('js/plugins/bootbox/bootbox.min.js') }}"></script>
   {{-- OnLibrary --}}
   <script src="{{ URL::asset('js/onlibrary.js') }}"></script>
   {{-- Other included third-party JavaScript --}}

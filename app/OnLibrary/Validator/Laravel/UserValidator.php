@@ -16,10 +16,11 @@ class UserValidator extends BaseLaravelValidator implements ValidatorInterface
             'password' => 'required'
         ],
         'update' => [
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'username' => 'required|min:5|alpha_dash',
-            'email' => 'required|email'
+            'email_address' => 'required|email',
+            'password' => 'required'
         ]
     ];
 

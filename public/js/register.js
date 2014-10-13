@@ -21,11 +21,13 @@ var register = (function ($) {
         $('.help-block').addClass('hidden');
  
         if (data.password !== $('#password-repeat').val()) {
+            // Manually fire validation error
             onLibrary.handleAjaxError({
-                'responseJSON': {
-                    'password-repeat': 'The password entered here must match the password entered above.'
-                }
+                'responseText': JSON.stringify({
+                    'password-repeat': ['The password entered here must match the password entered above.']
+                })
             });
+            return;
         }//end if
 
         $('#register-submit').prop('disabled', true)
@@ -33,7 +35,9 @@ var register = (function ($) {
             .html('<i class="fa fa-clock-o"></i> Creating...');
         $.ajax({'url': url, 'data': data, 'type': 'POST'})
             .done(function () {
-/*DEV*/         alert('SUCCESS');
+                // If creation was successful, redirect to the login page
+                // The success message will be displayed there
+                window.location.href = siteUrl + 'login';
             })
             .fail(onLibrary.handleAjaxError)
             .always(function () {

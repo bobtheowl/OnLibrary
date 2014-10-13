@@ -13,8 +13,10 @@ var onLibrary = (function ($) {
      */
     function parseValidationErrors(json) {
         var $elem, $formGroup, $error, inputId;
+        // Clear any existing errors
         $('.form-group').removeClass('has-error');
         $('.help-block').addClass('hidden');
+        // Display new validation errors
         for (inputId in json) {
             if (json.hasOwnProperty(inputId)) {
                 $elem = $('#' + inputId);
@@ -38,11 +40,13 @@ var onLibrary = (function ($) {
         'handleAjaxError': function (jqXHR) {
             var json;
             try {
+                // If the response can be parsed, it's probably validation errors
                 json = JSON.parse(jqXHR.responseText);
                 parseValidationErrors(json);
             } catch(e) {
-/*DEV*/         alert('other error: ' + jqXHR.responseText);
-            }
+                // If it can't be parsed, display it as an alert
+                bootbox.alert(jqXHR.responseText);
+            }//end try/catch
         }//end onLibrary.handleAjaxError()
     };
 }(jQuery));

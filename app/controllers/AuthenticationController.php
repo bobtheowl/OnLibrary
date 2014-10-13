@@ -20,8 +20,9 @@ class AuthenticationController extends \BaseController
         $remember = Input::get('remember');
 
         if (empty($username) || empty($password)) {
-            Session::flash('authError', self::BAD_INPUT_ERROR);
-            return Redirect::to('login');
+            return Redirect::to('login')
+                ->with('auth-error', self::BAD_INPUT_ERROR)
+                ->with('auth-username', (!empty($username)) ? $username : '');
         }//end if
 
         $success = (!empty($remember))
@@ -29,8 +30,9 @@ class AuthenticationController extends \BaseController
             : Auth::attempt(['username' => $username, 'password' => $password]);
 
         if ($success === false) {
-            Session::flash('authError', self::BAD_AUTH_ERROR);
-            return Redirect::to('login');
+            return Redirect::to('login')
+                ->with('auth-error', self::BAD_AUTH_ERROR)
+                ->with('auth-username', $username);
         }//end if
 
         return Redirect::intended('/');

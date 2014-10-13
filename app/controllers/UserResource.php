@@ -8,6 +8,9 @@ class UserResource extends \BaseController
 {
     /** Generic error to display */
     const GENERIC_ERROR = 'An unknown error occurred.';
+    
+    /** Message to display on login screen on successful account creation */
+    const CREATE_SUCCESS = '<strong>Your account has been created!</strong> You may now log in above.';
 
     /** Database repository */
     private $repo;
@@ -48,16 +51,17 @@ class UserResource extends \BaseController
     public function store()
     {
         try {
-            $input = PostSqlMapper::postToSql('users', Input::all());
+            $input = Input::all();
+            $input['password'] = Hash::make($input['password']);
+            $input = PostSqlMapper::postToSql('users', $input);
             $this->repo->insert($input);
+            Session::flash('auth-message', self::CREATE_SUCCESS);
         } catch (FatalAjaxException $e) {
             return Response::make($e->getMessage(), 400);
         } catch (InternalException $e) {
-            return Response::make($e->getMessage(), 400);
-            //return Response::make(self::GENERIC_ERROR, 400);
+            return Response::make(self::GENERIC_ERROR, 400);
         } catch (Exception $e) {
-            return Response::make($e, 500);
-            //return Response::make(self::GENERIC_ERROR, 500);
+            return Response::make(self::GENERIC_ERROR, 500);
         }//end try/catches
     }//end store()
 
