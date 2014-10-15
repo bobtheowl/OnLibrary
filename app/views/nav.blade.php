@@ -28,16 +28,19 @@
           <i class="fa fa-user"></i> <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu" id="onlibrary-user-menu">
-          <li role="presentation" class="dropdown-header">USER NAME HERE</li>
+          <li role="presentation" class="dropdown-header">
+            Logged in as:
+            <strong>{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</strong>
+          </li>
           <li role="presentation"><a href="{{ URL::to('logout') }}" role="menuitem">
             <i class="fa fa-sign-out"></i> Sign Out
           </a></li>
         </ul>{{-- /ul.dropdown-menu --}}
       </li>
     </ul>{{-- /ul.nav.navbar-nav.navbar-right --}}
-    <form class="navbar-form navbar-right" role="search" action="{{-- SEARCH HREF HERE --}}" method="GET">
+    <form class="navbar-form navbar-right" role="search" action="{{ URL::to('search') }}" method="GET">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Quick Search" />
+        <input type="text" class="form-control" id="nav-quick-search" name="query-all" placeholder="Quick Search" />
         <span class="input-group-btn">
           <button class="btn btn-default" type="submit">
             <i class="fa fa-search"></i>
