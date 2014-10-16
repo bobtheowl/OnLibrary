@@ -7,7 +7,9 @@ don't already have a book that they are thinking about purchasing.
 Completed features
 ------------------
 
-None. It is currently a base Laravel install.
+ *  **User Authentication**<br />
+    Users are able to register and log in. This includes "Remember Me" functionality, but does not yet
+    include password resetting.
 
 Features in development
 -----------------------
