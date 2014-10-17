@@ -5,19 +5,19 @@ use OnLibrary\API\LookupService as LookupInterface;
 use OnLibrary\API\SearchResult;
 use GuzzleHttp\Client as Client;
 use GuzzleHttp\Exception\RequestException;
-use OnLibrary\Exception\InternalException;// Just in case, may be removed later
+use OnLibrary\Exception\InternalException;
 
 class LookupService implements LookupInterface
 {
-    const BASE_URL = 'http://www.googleapis.com/books/v1/volumes';
+    const BASE_URL = 'https://www.googleapis.com/books/v1/volumes';
     
     const BAD_FIELD_ERROR = 'Attempted to request a non-existant field.';
     
     private static $fields = [
-        'title': 'intitle',
-        'author': 'inauthor',
-        'publisher': 'inpublisher',
-        'isbn': 'isbn'
+        'title' => 'intitle',
+        'author' => 'inauthor',
+        'publisher' => 'inpublisher',
+        'isbn' => 'isbn'
     ];
     
     private $client;
@@ -33,6 +33,7 @@ class LookupService implements LookupInterface
     {
         $this->client = $client;
         $this->result = $result;
+        $this->client->setDefaultOption('verify', false);
     }//end __construct()
     
     //http://www.googleapis.com/books/v1/volumes?q=isbn:
@@ -56,9 +57,12 @@ class LookupService implements LookupInterface
         ]);
         $response = $this->client->send($request);
         
-        if ($response->getStatusCode() === 200) {
-            $this->populateResult($response);
+        if ($response->getStatusCode() !== '200') {
+            throw new InternalException(
+                $response->getStatusCode() . ' ' . $response->getReasonPhrase()
+            );
         }//end if
+        $this->populateResult($response);
         
         return $this->result;
     }//end search()
@@ -68,19 +72,30 @@ class LookupService implements LookupInterface
         return $this->client->createRequest(
             'GET',
             self::BASE_URL,
-            $params
+            [
+                'headers' => ['Accept' => 'application/json'],
+                'query' => $params
+            ]
         );
     }//end createRequest()
     
     private function populateResult($response)
     {
-        // TODO: This
-        $this->result['title'] = '';
-        $this->result['subtitle'] = '';
-        $this->result['series'] = '';
-        $this->result['authors'] = '';
-        $this->result['publisher'] = '';
-        $this->result['isbn'] = '';
+        $data = $response->json();
+        if (isset($data['totalItems']) && $data['totalItems'] > 0) {
+            $book = $data['items'][0]['volumeInfo'];
+            $this->result['title'] = (isset($book['title'])) ? $book['title'] : '';
+            $this->result['subtitle'] = (isset($book['subtitle'])) ? $book['subtitle'] : '';
+            $this->result['series'] = '';// Google doesn't return series
+            $this->result['authors'] = (isset($book['authors'])) ? $book['authors'] : [];
+            $this->result['publisher'] = (isset($book['publisher'])) ? $book['publisher'] : '';
+            $this->result['isbn'] = '';
+            foreach ($book['industryIdentifiers'] as $identifier) {
+                if ($identifier['type'] === 'ISBN_13') {
+                    $this->result['isbn'] = $identifier['identifier'];
+                }//end if
+            }//end foreach
+        }//end if
     }//end populateResult()
 }//end class LookupService
 
