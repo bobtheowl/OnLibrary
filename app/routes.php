@@ -21,6 +21,7 @@ Route::resource('user', 'UserResource');
 Route::group(['before' => 'auth'], function () {
     // Resource controllers
     Route::resource('author', 'AuthorResource');
+    Route::get('book/search/{serviceId}', ['uses' => 'BookResource@search']);
     Route::resource('book', 'BookResource');
     Route::resource('publisher', 'PublisherResource');
     Route::resource('series', 'SeriesResource');

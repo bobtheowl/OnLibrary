@@ -15,7 +15,7 @@
                   <div class="input-group">
                     <input type="tel" class="form-control" id="add-isbn-lookup" />
                     <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">
+                      <button class="btn btn-default" type="button" id="btn-run-lookup">
                         <i class="fa fa-search"></i> Look up
                       </button>
                     </span>
@@ -27,7 +27,7 @@
                 <div class="form-group">
                   <label for="add-lookup-service">Look up using service</label>
                   <select id="add-lookup-service" class="form-control">
-                    <option value="google-books-api">Google Books API</option>
+                    <option value="googlebooks">Google Books API</option>
                   </select>
                 </div>{{-- /.form-group --}}
                 <hr />
@@ -79,6 +79,13 @@
     </div>{{-- /.row --}}
 @stop
 
+@section('js-include')
+	<script src="{{ URL::asset('js/add-lookup.js') }}"></script>
+	<script src="{{ URL::asset('js/add.js') }}"></script>
+@stop
+
 @section('onload')
     $('#onlibrary-nav-add').addClass('active');
+	lookup.init();
+	add.init();
 @stop
