@@ -34,31 +34,31 @@
               </div>{{-- /.col-md-6 --}}
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="add-title">Title</label>
-                  <input type="text" class="form-control" id="add-title" />
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" id="title" />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
-                  <label for="add-subtitle">Sub-title</label>
-                  <input type="text" class="form-control" id="add-subtitle" />
+                  <label for="subtitle">Sub-title</label>
+                  <input type="text" class="form-control" id="subtitle" />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
-                  <label for="add-author">Author(s)</label>
-                  <input type="text" class="form-control" id="add-author" />
+                  <label for="author">Author(s)</label>
+                  <input type="text" class="form-control" id="author" />
                   <span class="help-block">
                     <i class="fa fa-info-circle"></i> Separate multiple authors using a semi-colon.
                   </span>
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
-                  <label for="add-series">Series</label>
-                  <input type="text" class="form-control" id="add-series" />
+                  <label for="series">Series</label>
+                  <input type="text" class="form-control" id="series" />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
-                  <label for="add-publisher">Publisher</label>
-                  <input type="text" class="form-control" id="add-publisher" />
+                  <label for="publisher">Publisher</label>
+                  <input type="text" class="form-control" id="publisher" />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
-                  <label for="add-isbn">ISBN</label>
-                  <input type="tel" class="form-control" id="add-isbn" />
+                  <label for="isbn">ISBN</label>
+                  <input type="tel" class="form-control" id="isbn" />
                   <span class="help-block">
                     <i class="fa fa-info-circle"></i> Enter only the numbers for the ISBN.
                   </span>
@@ -67,10 +67,10 @@
             </div>{{-- /.row --}}
           </div>{{-- /.panel-body --}}
           <div class="panel-footer clearfix">
-            <button class="btn btn-default pull-left" type="button">
+            <button class="btn btn-default pull-left" type="button" id="btn-reset">
               <i class="fa fa-refresh"></i> Reset
             </button>
-            <button class="btn btn-primary pull-right" type="button">
+            <button class="btn btn-primary pull-right" type="button" id="btn-submit">
               <i class="fa fa-plus"></i> Add Book
             </button>
           </div>{{-- /.panel-footer.clearfix --}}

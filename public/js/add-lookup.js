@@ -5,12 +5,12 @@ var lookup = (function ($) {
     var $input = $('#add-isbn-lookup'),
         $service = $('#add-lookup-service'),
         $lookupBtn = $('#btn-run-lookup'),
-        $title = $('#add-title'),
-        $subtitle = $('#add-subtitle'),
-        $author = $('#add-author'),
-        $series = $('#add-series'),
-        $publisher = $('#add-publisher'),
-        $isbn = $('#add-isbn');
+        $title = $('#title'),
+        $subtitle = $('#subtitle'),
+        $author = $('#author'),
+        $series = $('#series'),
+        $publisher = $('#publisher'),
+        $isbn = $('#isbn');
 
     function doLookup() {
         var url = siteUrl + 'book/search/' + $service.val(),

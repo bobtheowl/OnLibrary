@@ -9,6 +9,22 @@ class PostSqlMapper
     const BAD_TABLE_ERROR = 'Requested an invalid table.';
 
     private static $maps = [
+        'authors' => [
+            'authors' => 'name'
+        ],
+        'books' => [
+            'title' => 'title',
+            'subtitle' => 'subtitle',
+            'isbn' => 'isbn',
+            'publisher' => 'publisher_id',
+            'series' => 'series_id'
+        ],
+        'publishers' => [
+            'publisher' => 'name'
+        ],
+        'series' => [
+            'series' => 'name'
+        ],
         'users' => [
             'firstname' => 'first_name',
             'lastname' => 'last_name',
