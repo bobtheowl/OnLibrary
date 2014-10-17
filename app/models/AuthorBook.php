@@ -10,6 +10,13 @@ class AuthorBook extends Eloquent
     protected $table = 'author_book';
 
     /**
+     * The attributes which are not mass-assignable.
+     *
+     * @var array
+     */
+    protected $guarded = array('id', 'created_at', 'updated_at');
+
+    /**
      * Set up the one-to-many relationship with the author_book table.
      */
     public function author_books()

@@ -7,7 +7,7 @@ use OnLibrary\Exception\InternalException;
 class UserValidator extends BaseLaravelValidator implements ValidatorInterface
 {
     /** Available validation rules */
-    private static $rules = [
+    protected $rules = [
         'insert' => [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -33,11 +33,11 @@ class UserValidator extends BaseLaravelValidator implements ValidatorInterface
      */
     public function usingRule($rule, array $params = [])
     {
-        if (array_key_exists($rule, self::$rules) === false) {
+        if (array_key_exists($rule, $this->rules) === false) {
             throw new InternalException(self::INVALID_RULE_ERROR);
         }//end if
 
-        $this->currentRules = self::$rules[$rule];
+        $this->currentRules = $this->rules[$rule];
 
         if (array_key_exists('id', $params)) {
             $this->currentRules['username'] .= '|' . $this->generateUniqueRule('users', 'username', $params['id']);

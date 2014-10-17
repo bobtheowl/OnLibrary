@@ -6,7 +6,7 @@ use OnLibrary\Validator\ValidatorInterface;
 class BookValidator extends BaseLaravelValidator implements ValidatorInterface
 {
     /** Validation rules */
-    private static $rules = [
+    protected $rules = [
         'insert' => [
             'title' => 'required',
             'subtitle' => '',

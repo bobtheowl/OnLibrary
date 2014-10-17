@@ -10,6 +10,13 @@ class Author extends Eloquent
     protected $table = 'authors';
 
     /**
+     * The attributes which are not mass-assignable.
+     *
+     * @var array
+     */
+    protected $guarded = array('id', 'created_at', 'updated_at');
+
+    /**
      * Sets up the validation and logging.
      *
      * @retval null
@@ -19,6 +26,14 @@ class Author extends Eloquent
         parent::boot();
         self::observe(App::make('OnLibrary\Validator\Laravel\AuthorObserver'));
     }//end boot()
+    
+    /**
+     * Sets up many-to-many relationship with the books table.
+     */
+    public function books()
+    {
+        return $this->belongsToMany('Book');
+    }//end books()
 }//end class Author
 
 //end file Author.php

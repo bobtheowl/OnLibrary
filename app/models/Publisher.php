@@ -10,6 +10,13 @@ class Publisher extends Eloquent
     protected $table = 'publishers';
 
     /**
+     * The attributes which are not mass-assignable.
+     *
+     * @var array
+     */
+    protected $guarded = array('id', 'created_at', 'updated_at');
+
+    /**
      * Sets up the validation and logging.
      *
      * @retval null

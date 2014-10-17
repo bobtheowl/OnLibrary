@@ -8,6 +8,13 @@ class BookUser extends Eloquent
      * @var string
      */
     protected $table = 'book_user';
+
+    /**
+     * The attributes which are not mass-assignable.
+     *
+     * @var array
+     */
+    protected $guarded = array('id', 'created_at', 'updated_at');
 }//end class BookUser
 
 //end file BookUser.php

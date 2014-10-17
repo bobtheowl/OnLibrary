@@ -2,6 +2,7 @@
 namespace OnLibrary\Validator\Laravel;
 
 use OnLibrary\Validator\ValidatorInterface;
+use OnLibrary\Exception\InternalException;
 use \Validator;
 
 abstract class BaseLaravelValidator implements ValidatorInterface
@@ -12,20 +13,14 @@ abstract class BaseLaravelValidator implements ValidatorInterface
     /** Input to validate */
     private $input = [];
 
+    /** Available rules to use */
+    protected $rules = [];
+
     /** Validation rules currently selected */
     protected $currentRules = [];
 
     /** Laravel validator instance */
     private $validator;
-
-    /**
-     * Sets rule to be used to validate input.
-     *
-     * @param string $rule Rule to use to validate input
-     * @param array $params Optional array of parameters to use with the rules
-     * @retval null
-     */
-    abstract public function usingRule($rule, array $params = []);
 
     /**
      * Sets input to be checked using the validator.
@@ -48,11 +43,11 @@ abstract class BaseLaravelValidator implements ValidatorInterface
      */
     public function usingRule($rule, array $params = [])
     {
-        if (array_key_exists($rule, self::$rules) === false) {
+        if (array_key_exists($rule, $this->rules) === false) {
             throw new InternalException(self::INVALID_RULE_ERROR);
         }//end if
 
-        $this->currentRules = self::$rules[$rule];
+        $this->currentRules = $this->rules[$rule];
         
         return $this;
     }//end usingRule()
