@@ -79,6 +79,58 @@
     </div>{{-- /.row --}}
 @stop
 
+@section('modals')
+    {{-- Modal displayed while book is being looked up --}}
+    <div class="modal fade" id="lookup-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <i class="fa fa-spinner fa-spin"></i> Looking up book&hellip;
+          </div>{{-- /.modal-body --}}
+        </div>{{-- /.modal-content --}}
+      </div>{{-- /.modal-dialog --}}
+    </div>{{-- /.modal.fade --}}
+    
+    {{-- Modal displayed while a book is being saved --}}
+    <div class="modal fade" id="saving-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">
+              <i class="fa fa-floppy-o"></i> Saving Book&hellip;
+            </h4>
+          </div>{{-- /.modal-header --}}
+          <div class="modal-body">
+            <p id="saving-modal-publisher-step" class="text-muted">
+              <i class="fa fa-ellipsis-h"></i> Saving publisher&hellip;
+            </p>
+            <p id="saving-modal-series-step" class="text-muted">
+              <i class="fa fa-ellipsis-h"></i> Saving series&hellip;
+            </p>
+            <p id="saving-modal-authors-step" class="text-muted">
+              <i class="fa fa-ellipsis-h"></i> Saving author(s)&hellip;
+            </p>
+            <p id="saving-modal-book-step" class="text-muted">
+              <i class="fa fa-ellipsis-h"></i> Saving book&hellip;
+            </p>
+          </div>{{-- /.modal-body --}}
+          <div class="modal-footer">
+            <button class="btn btn-default disabled" type="button" id="saving-modal-placeholder-btn">
+              <i class="fa fa-spinner fa-spin"></i> Saving&hellip;
+            </button>
+            <button class="btn btn-success hidden"
+                    type="button"
+                    id="saving-modal-ok-btn"
+                    data-dismiss="modal"
+            >
+              <i class="fa fa-check"></i> Done!
+            </button>
+          </div>{{-- /.modal-footer --}}
+        </div>{{-- /.modal-content --}}
+      </div>{{-- /.modal-dialog --}}
+    </div>{{-- /.modal.fade --}}
+@stop
+
 @section('js-include')
 	<script src="{{ URL::asset('js/add-lookup.js') }}"></script>
 	<script src="{{ URL::asset('js/add.js') }}"></script>

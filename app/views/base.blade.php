@@ -26,6 +26,7 @@
 <body>
   @yield('body', '')
   
+  @yield('modals', '')
   {{-- jQuery (necessary for Bootstrap's JavaScript plugins) --}}
   <script src="{{ URL::asset('js/plugins/jquery/jquery-2.1.1.min.js') }}"></script>
   {{-- Bootstrap --}}

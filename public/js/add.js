@@ -4,6 +4,13 @@
 var add = (function ($) {
     var $resetBtn = $('#btn-reset'),
         $submitBtn = $('#btn-submit'),
+        $modal = $('#saving-modal'),
+        $stepPublisher = $('#saving-modal-publisher-step'),
+        $stepSeries = $('#saving-modal-series-step'),
+        $stepAuthors = $('#saving-modal-authors-step'),
+        $stepBook = $('#saving-modal-book-step'),
+        $modalPlaceholderBtn = $('#saving-modal-placeholder-btn'),
+        $modalDoneBtn = $('#saving-modal-ok-btn'),
         $title = $('#title'),
         $subtitle = $('#subtitle'),
         $authors = $('#authors'),
@@ -19,6 +26,34 @@ var add = (function ($) {
         $publisher.val('');
         $isbn.val('');
     }//end resetForm()
+
+    function resetModal() {
+        var defaultIcon = 'fa-ellipsis-h',
+            defaultTextClass = 'text-muted';
+        // Reset step icons
+        $stepPublisher.find('i').removeClass().addClass('fa').addClass(defaultIcon);
+        $stepSeries.find('i').removeClass().addClass('fa').addClass(defaultIcon);
+        $stepAuthors.find('i').removeClass().addClass('fa').addClass(defaultIcon);
+        $stepBook.find('i').removeClass().addClass('fa').addClass(defaultIcon);
+        // Reset step colors
+        $stepPublisher.removeClass().addClass(defaultTextClass);
+        $stepSeries.removeClass().addClass(defaultTextClass);
+        $stepAuthors.removeClass().addClass(defaultTextClass);
+        $stepBook.removeClass().addClass(defaultTextClass);
+        // Reset modal buttons
+        $modalPlaceholderBtn.removeClass('hidden');
+        $modalDoneBtn.addClass('hidden');
+    }//end resetModal()
+
+    function setStepInProgress($step) {
+        $step.find('i').removeClass().addClass('fa').addClass('fa-spin').addClass('fa-spinner');
+        $step.removeClass().addClass('text-warning');
+    }//end setStepInProgress()
+
+    function setStepComplete($step) {
+        $step.find('i').removeClass().addClass('fa').addClass('fa-check');
+        $step.removeClass().addClass('text-success');
+    }//end setStepComplete()
 
     function generateNewDataObject()
     {
@@ -91,10 +126,6 @@ var add = (function ($) {
     }//end getAuthorId()
     
     function submitForm() {
-        // 1. Create/get publisher (if needed)
-        // 2. Create/get series (if needed)
-        // 3. Create/get authors
-        // 4. Create book
         var url = siteUrl + 'book',
             data = generateNewDataObject(),
             publisher = $publisher.val(),
@@ -102,18 +133,34 @@ var add = (function ($) {
             authors = getAuthorArray(),
             i = 0;
         
+        $modal.modal('show');
+        // Get/create publisher
+        setStepInProgress($stepPublisher);
         data.publisher = (publisher !== '') ? getPublisherId(publisher) : null;
+        setStepComplete($stepPublisher);
+        // Get/create series
+        setStepInProgress($stepSeries);
         data.series = (series !== '') ? getSeriesId(series) : null;
+        setStepComplete($stepSeries);
+        // Get/create author(s)
+        setStepInProgress($stepAuthors);
         for (i; i < authors.length; i++) {
             data.authors.push(getAuthorId(authors[i]));
         }//end for
-        
+        setStepComplete($stepAuthors);
+        // Add book
+        setStepInProgress($stepBook);
         $.ajax({'url': url, 'data': data, 'type': 'POST'})
             .done(function () {
-                bootbox.alert('The book was added successfully!');
+                setStepComplete($stepBook);
+                $modalPlaceholderBtn.addClass('hidden');
+                $modalDoneBtn.removeClass('hidden');
                 resetForm();
             })
-            .fail(onLibrary.handleAjaxError);
+            .fail(function (jqXHR, status, error) {
+                $modal.modal('hide');
+                onLibrary.handleAjaxError(jqXHR, status, error);
+            });
     }//end submitForm()
 
     return {
@@ -122,6 +169,12 @@ var add = (function ($) {
             $resetBtn.on('click.add', resetForm);
             $submitBtn.off('click.add');
             $submitBtn.on('click.add', submitForm);
+            $modal.modal({
+                'keyboard': false,
+                'show': false
+            });
+            $modal.off('hidden.bs.modal');
+            $modal.on('hidden.bs.modal', resetModal);
         }//end add.init()
     };
 })(jQuery);//end add
