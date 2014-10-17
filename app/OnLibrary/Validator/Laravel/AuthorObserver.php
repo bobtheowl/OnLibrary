@@ -1,7 +1,8 @@
 <?php
 namespace OnLibrary\Validator\Laravel;
 
-use OnLibrary\Exception\FatalAjaxError;
+use OnLibrary\Exception\FatalAjaxException;
+use OnLibrary\Database\PostSqlMapper;
 
 class AuthorObserver
 {

@@ -3,6 +3,10 @@ use OnLibrary\Database\AuthorBookRepository;
 use OnLibrary\Database\BookRepository;
 use OnLibrary\Database\BookUserRepository;
 use OnLibrary\User\CurrentUser;
+use OnLibrary\Database\PostSqlMapper;
+use OnLibrary\Exception\InternalException;
+use OnLibrary\Exception\FatalAjaxException;
+use OnLibrary\Exception\NonFatalAjaxException;
 
 class BookResource extends \BaseController
 {
@@ -76,7 +80,13 @@ class BookResource extends \BaseController
     public function store()
     {
         $allInput = Input::all();
-        $sqlInput = PostSqlMapper::postToSql('books', $input);
+        if (empty($allInput['publisher'])) {
+            $allInput['publisher'] = null;
+        }//end if
+        if (empty($allInput['series'])) {
+            $allInput['series'] = null;
+        }//end if
+        $sqlInput = PostSqlMapper::postToSql('books', $allInput);
         
         try {
             $bookId = $this->book->create($sqlInput);
@@ -91,9 +101,11 @@ class BookResource extends \BaseController
         } catch (FatalAjaxException $e) {
             return Response::make($e->getMessage(), 400);
         } catch (InternalException $e) {
-            return Response::make(self::GENERIC_ERROR, 400);
+            return Response::make(json_encode($e), 400);
+            //return Response::make(self::GENERIC_ERROR, 400);
         } catch (Exception $e) {
-            return Response::make(self::GENERIC_ERROR, 500);
+            return Response::make(json_encode($e), 500);
+            //return Response::make(self::GENERIC_ERROR, 500);
         }//end try/catches
     }//end store()
 

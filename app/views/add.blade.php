@@ -42,8 +42,8 @@
                   <input type="text" class="form-control" id="subtitle" />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
-                  <label for="author">Author(s)</label>
-                  <input type="text" class="form-control" id="author" />
+                  <label for="authors">Author(s)</label>
+                  <input type="text" class="form-control" id="authors" />
                   <span class="help-block">
                     <i class="fa fa-info-circle"></i> Separate multiple authors using a semi-colon.
                   </span>

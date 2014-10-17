@@ -3,6 +3,7 @@ namespace OnLibrary\Database\Eloquent;
 
 use OnLibrary\Database\BookUserRepository as RepoInterface;
 use OnLibrary\Exception\NonFatalAjaxException;
+use \BookUser;
 
 class BookUserRepository implements RepoInterface
 {

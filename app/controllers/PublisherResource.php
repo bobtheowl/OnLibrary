@@ -1,5 +1,9 @@
 <?php
 use OnLibrary\Database\PublisherRepository as Repository;
+use OnLibrary\Database\PostSqlMapper;
+use OnLibrary\Exception\InternalException;
+use OnLibrary\Exception\FatalAjaxException;
+use OnLibrary\Exception\NonFatalAjaxException;
 
 class PublisherResource extends \BaseController
 {
