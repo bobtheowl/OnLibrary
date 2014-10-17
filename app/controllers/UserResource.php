@@ -6,9 +6,6 @@ use OnLibrary\Exception\FatalAjaxException;
 
 class UserResource extends \BaseController
 {
-    /** Generic error to display */
-    const GENERIC_ERROR = 'An unknown error occurred.';
-    
     /** Message to display on login screen on successful account creation */
     const CREATE_SUCCESS = '<strong>Your account has been created!</strong> You may now log in above.';
 

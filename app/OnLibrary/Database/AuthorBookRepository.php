@@ -20,8 +20,8 @@ interface AuthorBookRepository
     /**
      * Removes a row connecting a book to an author.
      *
-     * @param integer $bookId ID of book to link
-     * @param integer $authorId ID of author to link
+     * @param integer $bookId ID of book to unlink
+     * @param integer $authorId ID of author to unlink
      */
     public function unlinkBookAndAuthor($bookId, $authorId);
 }//end interface AuthorBookRepository

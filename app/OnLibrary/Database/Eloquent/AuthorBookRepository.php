@@ -4,8 +4,6 @@ namespace OnLibrary\Database\Eloquent;
 use OnLibrary\Database\AuthorBookRepository as RepoInterface;
 use OnLibrary\Exception\NonFatalAjaxException;
 use \AuthorBook;
-use \Author;
-use \Book;
 
 class AuthorBookRepository implements RepoInterface
 {
