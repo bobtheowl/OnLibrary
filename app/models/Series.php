@@ -10,6 +10,17 @@ class Series extends Eloquent
     protected $table = 'series';
 
     /**
+     * Sets up the validation and logging.
+     *
+     * @retval null
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(App::make('OnLibrary\Validator\Laravel\SeriesObserver'));
+    }//end boot()
+
+    /**
      * Set up the one-to-many relationship with the books table.
      */
     public function books()

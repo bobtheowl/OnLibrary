@@ -10,6 +10,17 @@ class Book extends Eloquent
     protected $table = 'books';
 
     /**
+     * Sets up the validation and logging.
+     *
+     * @retval null
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(App::make('OnLibrary\Validator\Laravel\BookObserver'));
+    }//end boot()
+
+    /**
      * Set up the one-to-many relationship with the publishers table.
      */
     public function publisher()

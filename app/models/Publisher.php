@@ -10,6 +10,17 @@ class Publisher extends Eloquent
     protected $table = 'publishers';
 
     /**
+     * Sets up the validation and logging.
+     *
+     * @retval null
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        self::observe(App::make('OnLibrary\Validator\Laravel\PublisherObserver'));
+    }//end boot()
+
+    /**
      * Set up the one-to-many relationship with the books table.
      */
     public function books()
