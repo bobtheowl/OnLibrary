@@ -59,7 +59,8 @@ class BookResource extends \BaseController
      */
     public function index()
     {
-        //
+        $input = Input::all();
+        return $this->book->search($input, $this->user->id);
     }//end index()
 
     /**

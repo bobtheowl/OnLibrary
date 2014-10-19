@@ -19,6 +19,7 @@ var search = (function ($) {
         $runBtn = $('#search-run-btn'),
         $searchingBtn = $('#search-running-btn'),
         $results = $('#search-results'),
+        $count = $('#results-count'),
         $template = $('#search-result-template');
 
     function formHasData() {
@@ -46,12 +47,12 @@ var search = (function ($) {
             authors.push(data.authors[i].name);
         }//end for
 
-        html.replace('{$title}', data.title);
-        html.replace('{$author}', authors.join(', '));
-        html.replace('{$subtitle}', data.subtitle || '');
-        html.replace('{$series}', (data.series) ? data.series.name : '');
-        html.replace('{$publisher}', (data.publisher) ? data.publisher.name : '');
-        html.replace('{$isbn}', data.isbn || '');
+        html = html.replace('{$title}', data.title)
+            .replace('{$author}', authors.join(', '))
+            .replace('{$subtitle}', data.subtitle || '')
+            .replace('{$series}', (data.series) ? data.series.name : '')
+            .replace('{$publisher}', (data.publisher) ? data.publisher.name : '')
+            .replace('{$isbn}', data.isbn || '');
 
         $results.append($(html));
     }//end addSearchResult()
@@ -84,6 +85,7 @@ var search = (function ($) {
             addSearchResult(data[i]);
         }//end for
         refreshDetailsEvents();
+        $count.text(data.length);
     }//end handleSearchData()
 
     function performSearch() {
@@ -97,7 +99,7 @@ var search = (function ($) {
                 'publisher': $fields.publisher.val(),
                 'isbn': $fields.isbn.val(),
             },
-            method = 'GET'
+            method = 'GET',
             returning = 'json';
 
         $runBtn.addClass('hidden');

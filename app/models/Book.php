@@ -74,6 +74,39 @@ class Book extends Eloquent
     {
         return $this->belongsToMany('User');
     }//end authors()
+
+    public function scopeForUser($query, $userId)
+    {
+        return $query->whereHas('users', function ($q) use ($userId) {
+            $q->where('users.id', '=', (int)$userId);
+        });
+    }//end scopeForUser()
+
+    public function scopeSearchAuthors($query, array $authors)
+    {
+        return $query->whereHas('authors', function ($q) use ($authors) {
+            $authors = array_map('strtolower', $authors);
+            foreach ($authors as $author) {
+                $q->orWhereRaw('lower(authors.name) like ?', ['%' . implode('%', explode(' ', $author))]);
+            }//end foreach
+        });
+    }//end scopeSearchAuthors()
+    
+    public function scopeSearchSeries($query, $series)
+    {
+        return $query->whereHas('series', function ($q) use ($series) {
+            $series = strtolower($series);
+            $q->whereRaw('lower(series.name) like ?', ['%' . implode('%', explode(' ', $series))]);
+        });
+    }//end scopeSearchSeries()
+
+    public function scopeSearchPublisher($query, $publisher)
+    {
+        return $query->whereHas('publisher', function ($q) use ($publisher) {
+            $publisher = strtolower($publisher);
+            $q->whereRaw('lower(publishers.name) like ?', ['%' . implode('%', explode(' ', $publisher))]);
+        });
+    }//end scopeSearchPublisher()
 }//end class Book
 
 //end file Book.php

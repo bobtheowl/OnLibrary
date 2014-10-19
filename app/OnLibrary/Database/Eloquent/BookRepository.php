@@ -9,6 +9,60 @@ use \Exception;
 class BookRepository implements RepoInterface
 {
     /**
+     * Returns all books.
+     *
+     * @retval array Array of book data
+     */
+    public function all()
+    {
+        //
+    }//end all()
+
+    /**
+     * Returns all books linked to the specified user.
+     *
+     * @param integer $userId ID of user to get books for
+     * @retval array Array of book data
+     */
+    public function allForUser($userId)
+    {
+        //
+    }//end allForUser()
+
+    /**
+     * Returns an array of book data matching the passed search criteria.
+     *
+     * @param array $criteria Array of search criteria
+     * @param integer $userId ID of user to get books for
+     * @retval array Array of book data
+     */
+    public function search(array $criteria, $userId)
+    {
+        $books = Book::forUser($userId);
+        if (!empty($criteria['title'])) {
+            $criteria['title'] = strtolower($criteria['title']);
+            $books->whereRaw('lower(title) like ?', ['%' . implode('%', explode(' ', $criteria['title'])) . '%']);
+        }//end if
+        if (!empty($criteria['subtitle'])) {
+            $criteria['subtitle'] = strtolower($criteria['subtitle']);
+            $books->whereRaw('lower(subtitle) like ?', ['%' . implode('%', explode(' ', $criteria['subtitle'])) . '%']);
+        }//end if
+        if (!empty($criteria['isbn'])) {
+            $books->where('isbn', 'like', '%' . $criteria['isbn'] . '%');
+        }//end if
+        if (!empty($criteria['series'])) {
+            $books->searchSeries($criteria['series']);
+        }//end if
+        if (!empty($criteria['publisher'])) {
+            $books->searchPublisher($criteria['publisher']);
+        }//end if
+        if (!empty($criteria['authors'])) {
+            $books->searchAuthors((is_array($criteria['authors'])) ? $criteria['authors'] : [$criteria['authors']]);
+        }//end if
+        return $books->with('publisher', 'series', 'authors')->get()->toArray();
+    }//end search()
+
+    /**
      * Attempts to get the requested book, or if the book doesn't exist, creates it.
      *
      * @param array $input Array of book select/insert data

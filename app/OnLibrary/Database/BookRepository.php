@@ -7,6 +7,30 @@ interface BookRepository
     const NOT_FOUND_ERROR = 'The requested book could not be found.';
 
     /**
+     * Returns all books.
+     *
+     * @retval array Array of book data
+     */
+    public function all();
+
+    /**
+     * Returns all books linked to the specified user.
+     *
+     * @param integer $userId ID of user to get books for
+     * @retval array Array of book data
+     */
+    public function allForUser($userId);
+
+    /**
+     * Returns an array of book data matching the passed search criteria.
+     *
+     * @param array $criteria Array of search criteria
+     * @param integer $userId ID of user to get books for
+     * @retval array Array of book data
+     */
+    public function search(array $criteria, $userId);
+
+    /**
      * Attempts to get the requested book, or if the book doesn't exist, creates it.
      *
      * @param array $input Array of book select/insert data
