@@ -27,7 +27,7 @@
                 <label class="input-group-addon" for="email">
                   <i class="fa fa-at"></i>
                 </label>
-                <input type="text" class="form-control" name="email" id="email" />
+                <input type="email" class="form-control" name="email" id="email" />
               </div>{{-- /.input-group --}}
               <span class="help-block hidden"></span>
             </div>{{-- /.form-group --}}
