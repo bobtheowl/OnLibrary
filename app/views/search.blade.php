@@ -8,6 +8,7 @@
             <i class="fa fa-search"></i> Search Criteria
           </div>{{-- /.panel-heading --}}
           <div class="panel-body">
+            <input type="hidden" id="search-quick-query" value="{{{ Input::get('query-all') or '' }}}" />
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
@@ -125,12 +126,10 @@
 @stop
 
 @section('js-include')
-	{{--<script src="{{ URL::asset('js/add-lookup.js') }}"></script>
-	<script src="{{ URL::asset('js/add.js') }}"></script>--}}
+	<script src="{{ URL::asset('js/search.js') }}"></script>
 @stop
 
 @section('onload')
     $('#onlibrary-nav-search').addClass('active');
-	//lookup.init();
-	//add.init();
+	search.init();
 @stop

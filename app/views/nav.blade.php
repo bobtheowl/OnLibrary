@@ -40,7 +40,13 @@
     </ul>{{-- /ul.nav.navbar-nav.navbar-right --}}
     <form class="navbar-form navbar-right" role="search" action="{{ URL::to('search') }}" method="GET">
       <div class="input-group">
-        <input type="text" class="form-control" id="nav-quick-search" name="query-all" placeholder="Quick Search" />
+        <input type="text"
+               class="form-control"
+               id="nav-quick-search"
+               name="query-all"
+               placeholder="Quick Search"
+               value="{{{ Input::get('query-all') or '' }}}"
+        />
         <span class="input-group-btn">
           <button class="btn btn-default" type="submit">
             <i class="fa fa-search"></i>
