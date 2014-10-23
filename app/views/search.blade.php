@@ -16,31 +16,61 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="search-title">Title</label>
-                  <input type="text" class="form-control" id="search-title" name="search-title" value="{{ Input::get('title') or '' }}" />
+                  <input type="text"
+                         class="form-control"
+                         id="search-title"
+                         name="search-title"
+                         value="{{{ (Input::has('title')) ? Input::get('title') : '' }}}"
+                  />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
                   <label for="search-subtitle">Subtitle</label>
-                  <input type="text" class="form-control" id="search-subtitle" name="search-subtitle" value="{{ Input::get('subtitle') or '' }}" />
+                  <input type="text"
+                         class="form-control"
+                         id="search-subtitle"
+                         name="search-subtitle"
+                         value="{{{ (Input::has('subtitle')) ? Input::get('subtitle') : '' }}}"
+                  />
                 </div>{{-- /.form-group --}}
               </div>{{-- /.col-md-4 --}}
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="search-author">Author</label>
-                  <input type="text" class="form-control" id="search-author" name="search-author" value="{{ Input::get('author') or '' }}" />
+                  <input type="text"
+                         class="form-control"
+                         id="search-author"
+                         name="search-author"
+                         value="{{{ (Input::has('author')) ? Input::get('author') : '' }}}"
+                  />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
                   <label for="search-series">Series</label>
-                  <input type="text" class="form-control" id="search-series" name="search-series" value="{{ Input::get('series') or '' }}" />
+                  <input type="text"
+                         class="form-control"
+                         id="search-series"
+                         name="search-series"
+                         value="{{{ (Input::has('series')) ? Input::get('series') : '' }}}"
+                  />
                 </div>{{-- /.form-group --}}
               </div>{{-- /.col-md-4 --}}
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="search-publisher">Publisher</label>
-                  <input type="text" class="form-control" id="search-publisher" name="search-publisher" value="{{ Input::get('publisher') or '' }}" />
+                  <input type="text"
+                         class="form-control"
+                         id="search-publisher"
+                         name="search-publisher"
+                         value="{{{ (Input::has('publisher')) ? Input::get('publisher') : '' }}}"
+                  />
                 </div>{{-- /.form-group --}}
                 <div class="form-group">
                   <label for="search-isbn">ISBN</label>
-                  <input type="tel" class="form-control" id="search-isbn" name="search-isbn" value="{{ Input::get('isbn') or '' }}" />
+                  <input type="tel"
+                         class="form-control"
+                         id="search-isbn"
+                         name="search-isbn"
+                         value="{{{ (Input::has('isbn')) ? Input::get('isbn') : ''}}}"
+                  />
                 </div>{{-- /.form-group --}}
               </div>{{-- /.col-md-4 --}}
             </div>{{-- /.row --}}

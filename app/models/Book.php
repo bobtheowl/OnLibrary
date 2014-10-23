@@ -75,6 +75,13 @@ class Book extends Eloquent
         return $this->belongsToMany('User');
     }//end authors()
 
+    /**
+     * Only returns books linked to a specific user.
+     *
+     * @param Eloquent $query Current SQL query
+     * @param integer $userId ID of user to return books for
+     * @retval Eloquent Updated SQL query
+     */
     public function scopeForUser($query, $userId)
     {
         return $query->whereHas('users', function ($q) use ($userId) {
@@ -82,6 +89,14 @@ class Book extends Eloquent
         });
     }//end scopeForUser()
 
+    /**
+     * Only returns books linked to authors with a name like the name given.
+     * Search is case-insensitive.
+     *
+     * @param Eloquent $query Current SQL query
+     * @param string $author Author name to search for
+     * @retval Eloquent Updated SQL query
+     */
     public function scopeSearchAuthor($query, $author)
     {
         return $query->whereHas('authors', function ($q) use ($author) {
@@ -89,7 +104,15 @@ class Book extends Eloquent
             $q->whereRaw('lower(authors.name) like ?', ['%' . implode('%', explode(' ', $author))]);
         });
     }//end scopeSearchAuthor()
-    
+
+    /**
+     * Only returns books linked to a series with a name like the name given.
+     * Search is case-insensitive.
+     *
+     * @param Eloquent $query Current SQL query
+     * @param string $series Name of series to search for
+     * @retval Eloquent Updated SQL query
+     */
     public function scopeSearchSeries($query, $series)
     {
         return $query->whereHas('series', function ($q) use ($series) {
@@ -98,6 +121,14 @@ class Book extends Eloquent
         });
     }//end scopeSearchSeries()
 
+    /**
+     * Only returns books linked to a publisher with a name like the name given.
+     * Search is case-insensitive.
+     *
+     * @param Eloquent $query Current SQL query
+     * @param string $publisher Name of publisher to search for
+     * @retval Eloquent Updated SQL query
+     */
     public function scopeSearchPublisher($query, $publisher)
     {
         return $query->whereHas('publisher', function ($q) use ($publisher) {
@@ -105,7 +136,15 @@ class Book extends Eloquent
             $q->whereRaw('lower(publishers.name) like ?', ['%' . implode('%', explode(' ', $publisher))]);
         });
     }//end scopeSearchPublisher()
-    
+
+    /**
+     * Only returns books with either a title, subtitle, or author similar to
+     * the search term given. Search is case-insensitive.
+     *
+     * @param Eloquent $query Current SQL query
+     * @param string $search Search term
+     * @retval Eloquent Updated SQL query
+     */
     public function scopeQuickSearch($query, $search)
     {
         $search = '%' . implode('%', explode(' ', strtolower($search))) . '%';

@@ -22,6 +22,11 @@ var search = (function ($) {
         $count = $('#results-count'),
         $template = $('#search-result-template');
 
+    /**
+     * Returns true if one of the fields listed in the $fields object contains data.
+     *
+     * @retval boolean True if one of the fields contains data
+     */
     function formHasData() {
         var field;
         for (field in $fields) {
@@ -32,10 +37,21 @@ var search = (function ($) {
         return false;
     }//end formHasData()
 
+    /**
+     * Clears all results from the results container.
+     *
+     * @retval undefined
+     */
     function clearResults() {
         $results.children().remove();
     }//end clearResults()
 
+    /**
+     * Generates a search result element and adds it to the results container.
+     *
+     * @param object data Object containing book data
+     * @retval undefined
+     */
     function addSearchResult(data) {
         var html = $template.html(),
             authors = [],
@@ -57,6 +73,15 @@ var search = (function ($) {
         $results.append($(html));
     }//end addSearchResult()
 
+    /**
+     * Handles the click event for any of the details buttons on the search results.
+     * If the details are hidden, they are shown. If they're currently shown, they
+     * are hidden.
+     *
+     * The 'this' variable refers to the Details button being clicked.
+     *
+     * @retval undefined
+     */
     function handleDetailsClick() {
         var $this = $(this),
             $icon = $this.find('i'),
@@ -71,11 +96,24 @@ var search = (function ($) {
         }//end if/else
     }//end handleDetailsClick()
 
+    /**
+     * Clears any details click events currently set, and re-adds them.
+     *
+     * @retval undefined
+     */
     function refreshDetailsEvents() {
         var $allDetailsBtns = $('.results-details-btn');
+        $allDetailsBtns.off('click.search');
         $allDetailsBtns.on('click.search', handleDetailsClick);
     }//end refreshDetailsEvents()
 
+    /**
+     * Clears the current search results, and loops through the new search
+     * results and adds the results as needed.
+     *
+     * @param array data Array of book data objects
+     * @retval undefined
+     */
     function handleSearchData(data) {
         var i = 0,
             length = data.length;
@@ -88,6 +126,11 @@ var search = (function ($) {
         $count.text(data.length);
     }//end handleSearchData()
 
+    /**
+     * Makes the AJAX call to retrieve book search data.
+     *
+     * @retval undefined
+     */
     function performSearch() {
         var url = siteUrl + 'book',
             data = {
@@ -114,6 +157,10 @@ var search = (function ($) {
     }//end performSearch()
 
     return {
+        /**
+         * Adds the click event to the run button, and performs a search if the form
+         * already contains data.
+         */
         'init': function () {
             $runBtn.off('click.search');
             $runBtn.on('click.search', performSearch);

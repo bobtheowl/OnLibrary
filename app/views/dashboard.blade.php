@@ -10,4 +10,9 @@
         to e-mail me at <a href="mailto:jacob.stair@gmail.com?subject=Comment about OnLibrary">
         jacob.stair@gmail.com</a>.
     </p>
+    <p>
+        If you wish to view the source code for this project, you can view the git repository on
+        Github here: <a href="https://github.com/bobtheowl/OnLibrary" target="_blank">
+        https://github.com/bobtheowl/OnLibrary</a>.
+    </p>
 @stop
