@@ -8,7 +8,10 @@
             <i class="fa fa-search"></i> Search Criteria
           </div>{{-- /.panel-heading --}}
           <div class="panel-body">
-            <input type="hidden" id="search-quick-query" value="{{{ Input::get('query-all') or '' }}}" />
+            <input type="hidden"
+                   id="search-quick-query"
+                   value="{{{ (Input::has('query-all')) ? Input::get('query-all') : '' }}}"
+            />
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">

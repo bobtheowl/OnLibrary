@@ -39,26 +39,30 @@ class BookRepository implements RepoInterface
     public function search(array $criteria, $userId)
     {
         $books = Book::forUser($userId);
-        if (!empty($criteria['title'])) {
-            $criteria['title'] = strtolower($criteria['title']);
-            $books->whereRaw('lower(title) like ?', ['%' . implode('%', explode(' ', $criteria['title'])) . '%']);
-        }//end if
-        if (!empty($criteria['subtitle'])) {
-            $criteria['subtitle'] = strtolower($criteria['subtitle']);
-            $books->whereRaw('lower(subtitle) like ?', ['%' . implode('%', explode(' ', $criteria['subtitle'])) . '%']);
-        }//end if
-        if (!empty($criteria['isbn'])) {
-            $books->where('isbn', 'like', '%' . $criteria['isbn'] . '%');
-        }//end if
-        if (!empty($criteria['series'])) {
-            $books->searchSeries($criteria['series']);
-        }//end if
-        if (!empty($criteria['publisher'])) {
-            $books->searchPublisher($criteria['publisher']);
-        }//end if
-        if (!empty($criteria['author'])) {
-            $books->searchAuthor($criteria['author']);
-        }//end if
+        if (!empty($criteria['quick'])) {
+            $books->quickSearch($criteria['quick']);
+        } else {
+            if (!empty($criteria['title'])) {
+                $criteria['title'] = strtolower($criteria['title']);
+                $books->whereRaw('lower(title) like ?', ['%' . implode('%', explode(' ', $criteria['title'])) . '%']);
+            }//end if
+            if (!empty($criteria['subtitle'])) {
+                $criteria['subtitle'] = strtolower($criteria['subtitle']);
+                $books->whereRaw('lower(subtitle) like ?', ['%' . implode('%', explode(' ', $criteria['subtitle'])) . '%']);
+            }//end if
+            if (!empty($criteria['isbn'])) {
+                $books->where('isbn', 'like', '%' . $criteria['isbn'] . '%');
+            }//end if
+            if (!empty($criteria['series'])) {
+                $books->searchSeries($criteria['series']);
+            }//end if
+            if (!empty($criteria['publisher'])) {
+                $books->searchPublisher($criteria['publisher']);
+            }//end if
+            if (!empty($criteria['author'])) {
+                $books->searchAuthor($criteria['author']);
+            }//end if
+        }//end if/else
         return $books->with('publisher', 'series', 'authors')->get()->toArray();
     }//end search()
 

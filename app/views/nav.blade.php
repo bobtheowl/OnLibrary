@@ -18,8 +18,8 @@
       <li id="onlibrary-nav-add"><a href="{{ URL::to('add') }}">
         <i class="fa fa-plus"></i> Add Book
       </a></li>
-      <li id="onlibrary-nav-manage"><a href="{{ URL::to('manage') }}">
-        <i class="fa fa-gear"></i> Manage Library
+      <li id="onlibrary-nav-manage" class="disabled"><a href="{{ URL::to('manage') }}">
+        <i class="fa fa-gear"></i> Manage
       </a></li>
     </ul>{{-- /ul.nav.navbar-nav --}}
     <ul class="nav navbar-nav navbar-right">
@@ -45,7 +45,7 @@
                id="nav-quick-search"
                name="query-all"
                placeholder="Quick Search"
-               value="{{{ Input::get('query-all') or '' }}}"
+               value="{{{ (Input::has('query-all')) ? Input::get('query-all') : '' }}}"
         />
         <span class="input-group-btn">
           <button class="btn btn-default" type="submit">

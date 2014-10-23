@@ -88,7 +88,7 @@ class Book extends Eloquent
             $author = strtolower($author);
             $q->whereRaw('lower(authors.name) like ?', ['%' . implode('%', explode(' ', $author))]);
         });
-    }//end scopeSearchAuthors()
+    }//end scopeSearchAuthor()
     
     public function scopeSearchSeries($query, $series)
     {
@@ -105,6 +105,18 @@ class Book extends Eloquent
             $q->whereRaw('lower(publishers.name) like ?', ['%' . implode('%', explode(' ', $publisher))]);
         });
     }//end scopeSearchPublisher()
+    
+    public function scopeQuickSearch($query, $search)
+    {
+        $search = '%' . implode('%', explode(' ', strtolower($search))) . '%';
+        return $query->where(function ($bookQuery) use ($search) {
+            $bookQuery->orWhereRaw('lower(books.title) like ?', [$search]);
+            $bookQuery->orWhereRaw('lower(books.subtitle) like ?', [$search]);
+            $bookQuery->orWhereHas('authors', function ($authorQuery) use ($search) {
+                $authorQuery->whereRaw('lower(authors.name) like ?', [$search]);
+            });
+        });
+    }//end scopeQuickSearch()
 }//end class Book
 
 //end file Book.php
