@@ -34,7 +34,7 @@
             </div>{{-- /.form-group --}}
             <p>
               <span class="pull-left">
-                <a href="{{ URL::to('reset') }}">Forgot your password?</a>
+                <a href="{{ URL::to('reset') }}" disabled>Forgot your password?</a>
               </span>
               <label class="checkbox-inline pull-right">
                 <input type="checkbox" name="remember" value="yes" />

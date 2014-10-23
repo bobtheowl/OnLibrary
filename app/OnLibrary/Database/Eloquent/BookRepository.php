@@ -56,8 +56,8 @@ class BookRepository implements RepoInterface
         if (!empty($criteria['publisher'])) {
             $books->searchPublisher($criteria['publisher']);
         }//end if
-        if (!empty($criteria['authors'])) {
-            $books->searchAuthors((is_array($criteria['authors'])) ? $criteria['authors'] : [$criteria['authors']]);
+        if (!empty($criteria['author'])) {
+            $books->searchAuthor($criteria['author']);
         }//end if
         return $books->with('publisher', 'series', 'authors')->get()->toArray();
     }//end search()

@@ -82,13 +82,11 @@ class Book extends Eloquent
         });
     }//end scopeForUser()
 
-    public function scopeSearchAuthors($query, array $authors)
+    public function scopeSearchAuthor($query, $author)
     {
-        return $query->whereHas('authors', function ($q) use ($authors) {
-            $authors = array_map('strtolower', $authors);
-            foreach ($authors as $author) {
-                $q->orWhereRaw('lower(authors.name) like ?', ['%' . implode('%', explode(' ', $author))]);
-            }//end foreach
+        return $query->whereHas('authors', function ($q) use ($author) {
+            $author = strtolower($author);
+            $q->whereRaw('lower(authors.name) like ?', ['%' . implode('%', explode(' ', $author))]);
         });
     }//end scopeSearchAuthors()
     

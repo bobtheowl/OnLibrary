@@ -3,6 +3,13 @@ OnLibrary styles
 Author: Jacob Stair
 */
 
+a[disabled] {
+    pointer-events:none;
+}
+a[disabled]:link, a[disabled]:active, a[disabled]:hover {
+    text-decoration:none;
+}
+
 /* Font Awesome overridden styles */
 .fa {
     width:1em;
